@@ -8,7 +8,9 @@ class rvm::system($version=undef) {
 
   exec { 'system-rvm':
     path    => '/usr/bin:/usr/sbin:/bin',
-    command => "bash -c '/usr/bin/curl -s https://raw.githubusercontent.com/wayneeseguin/rvm/master/binscripts/rvm-installer -o /tmp/rvm-installer ; \
+    command => "bash -c '/usr/bin/curl -s https://raw.githubusercontent.com/rvm/rvm/master/binscripts/rvm-installer -o /tmp/rvm-installer ; \
+                /usr/bin/curl -s https://raw.githubusercontent.com/rvm/rvm/master/binscripts/rvm-installer.asc -o /tmp/rvm-installer.asc ; \
+                gpg --verify /tmp/rvm-installer.asc ; \
                 chmod +x /tmp/rvm-installer ; \
                 rvm_bin_path=/usr/local/rvm/bin rvm_man_path=/usr/local/rvm/man /tmp/rvm-installer --version ${version} ; \
                 rm /tmp/rvm-installer'",
