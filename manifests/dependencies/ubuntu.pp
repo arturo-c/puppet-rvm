@@ -19,10 +19,4 @@ class rvm::dependencies::ubuntu {
   if ! defined(Package['autoconf'])             { package { 'autoconf':             ensure => present } }
   if ! defined(Package['libc6-dev'])            { package { 'libc6-dev':            ensure => present } }
 
-  exec { 'add rvm keyserver':
-    command => 'gpg --homedir /root/.gnupg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3',
-    path => '/usr/bin',
-    creates => '/home/.gnupg/trustdb.gpg'
-  }
-
 }

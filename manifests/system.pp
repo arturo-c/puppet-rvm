@@ -8,16 +8,9 @@ class rvm::system($version=undef) {
 
   exec { 'system-rvm':
     path    => '/usr/bin:/usr/sbin:/bin',
-    command => "bash -c '/usr/bin/curl -s https://raw.githubusercontent.com/rvm/rvm/master/binscripts/rvm-installer -o /tmp/rvm-installer ; \
-                /usr/bin/curl -s https://raw.githubusercontent.com/rvm/rvm/master/binscripts/rvm-installer.asc -o /tmp/rvm-installer.asc ; \
-                gpg --verify /tmp/rvm-installer.asc ; \
-                chmod +x /tmp/rvm-installer ; \
-                rvm_bin_path=/usr/local/rvm/bin rvm_man_path=/usr/local/rvm/man /tmp/rvm-installer --version ${version} ; \
-                rm /tmp/rvm-installer'",
+    command => "gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3; curl -sSL https://get.rvm.io | sudo bash -s -- --version ${version}",
     creates => '/usr/local/rvm/bin/rvm',
-    require => [
-      Class['rvm::dependencies'],
-    ],
+    require => Class['rvm::dependencies']
   }
 
   # the fact won't work until rvm is installed before puppet starts
