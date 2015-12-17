@@ -8,7 +8,7 @@ class rvm::system($version=undef) {
 
   exec { 'system-rvm':
     path    => '/usr/bin:/usr/sbin:/bin',
-    command => "gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3; curl -sSL https://get.rvm.io | sudo bash -s -- --version ${version}",
+    command => "curl -sSL https://rvm.io/mpapis.asc | gpg --import -; curl -sSL https://get.rvm.io | sudo bash -s -- --version ${version}",
     creates => '/usr/local/rvm/bin/rvm',
     require => Class['rvm::dependencies']
   }
